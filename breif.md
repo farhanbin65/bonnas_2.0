@@ -231,3 +231,11 @@ Anchor location copy to **Roman Road / E2 0RB / East London**.
 - Collection arrangements and address visibility.
 - Approved logo version and artwork assets.
 - Whether Bonna’s 2.0 will remain noindex after review.
+
+
+
+## contact info
+
+- WhatsApp message URL: https://wa.me/447912795556
+
+- Email: orders@bonnas.co.uk
