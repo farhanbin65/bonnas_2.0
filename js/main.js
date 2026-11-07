@@ -2,9 +2,6 @@
   'use strict';
 
   const tabs = document.getElementById('tabs');
-  const categoryPicker = document.getElementById('menu-category');
-  const categoryCurrent = document.getElementById('menu-category-current');
-  const categoryOptions = document.getElementById('menu-category-options');
   const grid = document.getElementById('grid');
   const categories = Object.keys(menu);
 
@@ -26,39 +23,20 @@
   }
 
   function showCategory(selected) {
-    categoryCurrent.textContent = selected;
     grid.replaceChildren(...menu[selected].map(card));
-    for (const button of [...tabs.children, ...categoryOptions.children]) {
+    for (const button of tabs.children) {
       button.setAttribute('aria-pressed', String(button.textContent === selected));
     }
   }
 
-  for (const group of [tabs, categoryOptions]) {
-    for (const category of categories) {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'pill';
-      button.textContent = category;
-      button.addEventListener('click', () => {
-        showCategory(category);
-        if (group === categoryOptions) {
-          categoryPicker.open = false;
-          categoryPicker.querySelector('summary').focus();
-        }
-      });
-      group.append(button);
-    }
+  for (const category of categories) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'pill';
+    button.textContent = category;
+    button.addEventListener('click', () => showCategory(category));
+    tabs.append(button);
   }
-
-  categoryPicker.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && categoryPicker.open) {
-      categoryPicker.open = false;
-      categoryPicker.querySelector('summary').focus();
-    }
-  });
-  document.addEventListener('click', event => {
-    if (categoryPicker.open && !categoryPicker.contains(event.target)) categoryPicker.open = false;
-  });
 
   showCategory(categories[0]);
 })();

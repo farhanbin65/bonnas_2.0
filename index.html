@@ -99,6 +99,7 @@ html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
 .menu-photos h2,.order-steps h2{font-size:clamp(32px,5vw,48px)}
 
 @media (max-width:500px){
+  .hero2>svg{display:none}
   .site-header{gap:10px;padding-block:10px}
   .header-brand .brand-logo{width:46px;height:46px}
   .header-links{width:100%;gap:5px}
@@ -141,22 +142,14 @@ body{padding-bottom:64px}
 #menu{display:flex;flex-direction:column;gap:22px}
 .menu-controls{display:grid;gap:10px}
 #tabs{display:flex;flex-wrap:wrap;gap:8px}
-.menu-category-picker{display:none}
 .menu-information{color:#0F5B34}
 .menu-information summary{cursor:pointer;font-weight:700}
 .menu-information ul{margin:6px 0 0;padding-left:20px;color:#17120E}
 
 @media (max-width:500px){
   #menu{gap:14px;padding-block:34px}
-  #tabs{display:none}
-  .menu-category-picker{display:block;border:2px solid #0F5B34;border-radius:14px;background:#fff8e8;box-shadow:3px 3px 0 #FBB91A}
-  .menu-category-picker summary{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;padding:8px 12px;color:#0F5B34;cursor:pointer;list-style:none}
-  .menu-category-picker summary::-webkit-details-marker{display:none}
-  .menu-category-picker summary::after{content:"";width:8px;height:8px;margin-right:4px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg)}
-  .menu-category-picker[open] summary::after{transform:rotate(225deg)}
-  #menu-category-current{display:inline-block;margin-left:6px;color:#17120E}
-  .menu-category-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:8px;border-top:1px solid #D7AE76}
-  .menu-category-options .pill{padding:6px 8px;border-width:2px;border-radius:10px;font-size:14px}
+  #tabs{min-width:0;flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-inline:contain;padding:7px;gap:6px;border:2px solid #0F5B34;border-radius:14px;background:#fff8e8;box-shadow:3px 3px 0 #FBB91A;scrollbar-width:thin;scrollbar-color:#0F5B34 #FEF1D8}
+  #tabs .pill{flex:none;padding:6px 11px;border-width:2px;font-size:14px;white-space:nowrap}
   .menu-information,.menu-controls .menu-note{font-size:14px}
   .note-panel{padding:12px}
   .note-header{gap:6px}
@@ -204,10 +197,6 @@ body{padding-bottom:64px}
 <div class="menu-heading"><svg class="bob" width="90" height="76" viewBox="0 0 120 100" aria-hidden="true" style="flex:none"><use href="#bd" width="120" height="100"/></svg><h2 class="disp" style="margin:0;font-weight:400;text-shadow:4px 4px 0 #FBB91A">Explore the menu</h2><span class="disp" style="color:#E8336D">আমাদের মেনু</span><svg class="bob" width="90" height="76" viewBox="0 0 120 100" aria-hidden="true" style="flex:none"><use href="#bd" width="120" height="100" transform="translate(120 0) scale(-1 1)"/></svg></div>
 <div class="menu-controls">
   <div id="tabs" role="group" aria-label="Menu category"></div>
-  <details class="menu-category-picker" id="menu-category">
-    <summary><span>Category <strong id="menu-category-current"></strong></span></summary>
-    <div class="menu-category-options" id="menu-category-options" role="group" aria-label="Menu category"></div>
-  </details>
   <p class="menu-note">Tap a dish to add it to your note.</p>
   <details class="menu-information">
     <summary>Collection, allergies &amp; minimums</summary>
@@ -589,9 +578,6 @@ const menuNote = (function () {
   'use strict';
 
   const tabs = document.getElementById('tabs');
-  const categoryPicker = document.getElementById('menu-category');
-  const categoryCurrent = document.getElementById('menu-category-current');
-  const categoryOptions = document.getElementById('menu-category-options');
   const grid = document.getElementById('grid');
   const categories = Object.keys(menu);
 
@@ -613,39 +599,20 @@ const menuNote = (function () {
   }
 
   function showCategory(selected) {
-    categoryCurrent.textContent = selected;
     grid.replaceChildren(...menu[selected].map(card));
-    for (const button of [...tabs.children, ...categoryOptions.children]) {
+    for (const button of tabs.children) {
       button.setAttribute('aria-pressed', String(button.textContent === selected));
     }
   }
 
-  for (const group of [tabs, categoryOptions]) {
-    for (const category of categories) {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'pill';
-      button.textContent = category;
-      button.addEventListener('click', () => {
-        showCategory(category);
-        if (group === categoryOptions) {
-          categoryPicker.open = false;
-          categoryPicker.querySelector('summary').focus();
-        }
-      });
-      group.append(button);
-    }
+  for (const category of categories) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'pill';
+    button.textContent = category;
+    button.addEventListener('click', () => showCategory(category));
+    tabs.append(button);
   }
-
-  categoryPicker.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && categoryPicker.open) {
-      categoryPicker.open = false;
-      categoryPicker.querySelector('summary').focus();
-    }
-  });
-  document.addEventListener('click', event => {
-    if (categoryPicker.open && !categoryPicker.contains(event.target)) categoryPicker.open = false;
-  });
 
   showCategory(categories[0]);
 })();

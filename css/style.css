@@ -89,6 +89,7 @@ html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
 .menu-photos h2,.order-steps h2{font-size:clamp(32px,5vw,48px)}
 
 @media (max-width:500px){
+  .hero2>svg{display:none}
   .site-header{gap:10px;padding-block:10px}
   .header-brand .brand-logo{width:46px;height:46px}
   .header-links{width:100%;gap:5px}
@@ -131,22 +132,14 @@ body{padding-bottom:64px}
 #menu{display:flex;flex-direction:column;gap:22px}
 .menu-controls{display:grid;gap:10px}
 #tabs{display:flex;flex-wrap:wrap;gap:8px}
-.menu-category-picker{display:none}
 .menu-information{color:#0F5B34}
 .menu-information summary{cursor:pointer;font-weight:700}
 .menu-information ul{margin:6px 0 0;padding-left:20px;color:#17120E}
 
 @media (max-width:500px){
   #menu{gap:14px;padding-block:34px}
-  #tabs{display:none}
-  .menu-category-picker{display:block;border:2px solid #0F5B34;border-radius:14px;background:#fff8e8;box-shadow:3px 3px 0 #FBB91A}
-  .menu-category-picker summary{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;padding:8px 12px;color:#0F5B34;cursor:pointer;list-style:none}
-  .menu-category-picker summary::-webkit-details-marker{display:none}
-  .menu-category-picker summary::after{content:"";width:8px;height:8px;margin-right:4px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg)}
-  .menu-category-picker[open] summary::after{transform:rotate(225deg)}
-  #menu-category-current{display:inline-block;margin-left:6px;color:#17120E}
-  .menu-category-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:8px;border-top:1px solid #D7AE76}
-  .menu-category-options .pill{padding:6px 8px;border-width:2px;border-radius:10px;font-size:14px}
+  #tabs{min-width:0;flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-inline:contain;padding:7px;gap:6px;border:2px solid #0F5B34;border-radius:14px;background:#fff8e8;box-shadow:3px 3px 0 #FBB91A;scrollbar-width:thin;scrollbar-color:#0F5B34 #FEF1D8}
+  #tabs .pill{flex:none;padding:6px 11px;border-width:2px;font-size:14px;white-space:nowrap}
   .menu-information,.menu-controls .menu-note{font-size:14px}
   .note-panel{padding:12px}
   .note-header{gap:6px}
