@@ -1,0 +1,23 @@
+<div class="menu-note-widget">
+  <button class="btn note-toggle" id="note-toggle" type="button" aria-expanded="false" aria-controls="note-panel">My menu note · 0</button>
+  <aside class="note-panel" id="note-panel" aria-labelledby="note-title" hidden>
+    <header class="note-header">
+      <h2 class="disp" id="note-title">My menu note</h2>
+      <div class="note-header-actions">
+        <button type="button" class="pill" id="note-clear" aria-label="Clear menu note" disabled>Clear</button>
+        <button type="button" class="pill" id="note-close" aria-label="Close menu note">Close</button>
+      </div>
+    </header>
+    <form id="note-options" hidden>
+      <label for="note-option" id="note-option-label"></label>
+      <select id="note-option"></select>
+      <button type="submit" class="pill">Add to note</button>
+    </form>
+    <p id="note-empty">Choose a dish to start your note.</p>
+    <ul class="note-items" id="note-items"></ul>
+    <p id="note-total" aria-live="polite"></p>
+    <button type="button" class="btn" id="note-copy" disabled>Copy order note</button>
+    <p class="note-status" id="note-status" role="status"></p>
+    <textarea id="note-copy-fallback" aria-label="Order note to copy manually" readonly hidden></textarea>
+  </aside>
+</div>
